@@ -1,2 +1,3 @@
 # puppet-example
-puppet stuff
+
+A place to put example puppet/vagrant stuff
