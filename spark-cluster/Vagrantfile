@@ -1,0 +1,19 @@
+Vagrant::Config.run do |config|
+
+  config.vm.box = "centos"
+
+  config.vm.define "puppetmaster" do |puppetmaster|
+    puppetmaster.vm.provision :shell, path: "puppetmaster.sh"
+    puppetmaster.vm.network :hostonly, "192.168.33.10"
+  end
+
+  config.vm.define "sparkmaster" do |sparkmaster|
+    sparkmaster.vm.provision :shell, path: "sparkmaster.sh"
+    sparkmaster.vm.network :hostonly, "192.168.33.11"
+  end
+
+  config.vm.define "sparkworker" do |sparkworker|
+    sparkworker.vm.provision :shell, path: "sparkworker.sh"
+    sparkworker.vm.network :hostonly, "192.168.33.12"
+  end
+end
