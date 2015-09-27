@@ -5,15 +5,18 @@ Vagrant::Config.run do |config|
   config.vm.define "puppetmaster" do |puppetmaster|
     puppetmaster.vm.provision :shell, path: "puppetmaster.sh"
     puppetmaster.vm.network :hostonly, "192.168.33.10"
+    puppetmaster.vm.host_name = "puppetmaster"
   end
 
   config.vm.define "sparkmaster" do |sparkmaster|
     sparkmaster.vm.provision :shell, path: "sparkmaster.sh"
     sparkmaster.vm.network :hostonly, "192.168.33.11"
+    sparkmaster.vm.host_name = "sparkmaster"
   end
 
-  config.vm.define "sparkworker" do |sparkworker|
-    sparkworker.vm.provision :shell, path: "sparkworker.sh"
-    sparkworker.vm.network :hostonly, "192.168.33.12"
+  config.vm.define "sparkworker1" do |sparkworker1|
+    sparkworker1.vm.provision :shell, path: "sparkworker.sh"
+    sparkworker1.vm.network :hostonly, "192.168.33.12"
+    sparkworker1.vm.host_name = "sparkworker"
   end
 end
