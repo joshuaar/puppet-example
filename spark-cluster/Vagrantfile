@@ -1,4 +1,4 @@
-Vagrant::Config.run do |config|
+Vagrant.configure("1") do |config|
 
   config.vm.box = "centos"
 
@@ -11,6 +11,7 @@ Vagrant::Config.run do |config|
   config.vm.define "sparkmaster" do |sparkmaster|
     sparkmaster.vm.provision :shell, path: "sparkmaster.sh"
     sparkmaster.vm.network :hostonly, "192.168.33.11"
+    sparkmaster.vm.forward_port 8080, 8080
     sparkmaster.vm.host_name = "sparkmaster"
   end
 
@@ -20,3 +21,10 @@ Vagrant::Config.run do |config|
     sparkworker1.vm.host_name = "sparkworker"
   end
 end
+
+
+Vagrant.configure("2") do |config|
+  config.vm.synced_folder "puppet/", "/host_puppet"
+end
+
+
