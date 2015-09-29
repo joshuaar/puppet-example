@@ -36,6 +36,9 @@
 # Copyright 2015 Your name here, unless otherwise noted.
 #
 
-#class spark inherits ::spark::params {
-#
-#}
+class spark (
+  $master_hostname = undef,
+  $master_port = '7077'
+) {
+
+}

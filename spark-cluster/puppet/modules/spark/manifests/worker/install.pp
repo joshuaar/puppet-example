@@ -1,4 +1,4 @@
-class spark::master::install {
+class spark::worker::install {
   include spark::common::install
 }
 
