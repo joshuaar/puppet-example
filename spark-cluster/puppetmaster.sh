@@ -8,6 +8,7 @@ sudo sed -i '/\[main\]/a \ \ \ \ dns_alt_names=puppetmaster' /etc/puppet/puppet.
 
 #link the modules
 sudo puppet module install puppetlabs-stdlib
+sudo puppet module install elasticsearch-elasticsearch
 ln -s /host_puppet/modules/spark /etc/puppet/modules/spark
 ln -s /host_puppet/manifests/site.pp /etc/puppet/manifests/site.pp
 
