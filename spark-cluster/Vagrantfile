@@ -3,20 +3,23 @@ Vagrant.configure("1") do |config|
   config.vm.box = "centos"
 
   config.vm.define "puppetmaster" do |puppetmaster|
+    puppetmaster.vm.provision :shell, path: "common.sh"
     puppetmaster.vm.provision :shell, path: "puppetmaster.sh"
     puppetmaster.vm.network :hostonly, "192.168.33.10"
     puppetmaster.vm.host_name = "puppetmaster"
   end
 
   config.vm.define "sparkmaster" do |sparkmaster|
-    sparkmaster.vm.provision :shell, path: "sparkmaster.sh"
+    sparkmaster.vm.provision :shell, path: "common.sh"
+    sparkmaster.vm.provision :shell, path: "spark.sh"
     sparkmaster.vm.network :hostonly, "192.168.33.11"
     sparkmaster.vm.forward_port 8080, 8080
     sparkmaster.vm.host_name = "sparkmaster"
   end
 
   config.vm.define "sparkworker1" do |sparkworker1|
-    sparkworker1.vm.provision :shell, path: "sparkworker.sh"
+    sparkworker1.vm.provision :shell, path: "common.sh"
+    sparkworker1.vm.provision :shell, path: "spark.sh"
     sparkworker1.vm.network :hostonly, "192.168.33.12"
     sparkworker1.vm.host_name = "sparkworker"
   end
