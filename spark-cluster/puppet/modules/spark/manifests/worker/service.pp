@@ -3,9 +3,6 @@ class spark::worker::service {
   $spark_home = $spark::worker::config::spark_home 
   $connection_string = "spark://$spark::master_hostname:$spark::master_port"
 
-  notify {
-    "$connection_string":
-  }
   service { "spark-worker":
     ensure => running,
     start => "$spark_home/sbin/start-slave.sh $connection_string",

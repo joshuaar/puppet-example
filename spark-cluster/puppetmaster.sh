@@ -10,7 +10,12 @@ sudo sed -i '/\[main\]/a \ \ \ \ dns_alt_names=puppetmaster' /etc/puppet/puppet.
 sudo puppet module install puppetlabs-stdlib
 sudo puppet module install elasticsearch-elasticsearch
 ln -s /host_puppet/modules/spark /etc/puppet/modules/spark
+ln -s /host_puppet/modules/oha-facts /etc/puppet/modules/oha-facts
 ln -s /host_puppet/manifests/site.pp /etc/puppet/manifests/site.pp
+
+#register the custom facts
+echo "FACTERLIB=/host_puppet/facts" >> /etc/environment
+
 
 #start the puppet master
 sudo puppet master

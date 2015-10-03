@@ -2,6 +2,7 @@ class spark::master::service {
 
   $spark_home = $spark::master::config::spark_home 
 
+  notify {$spark_home:}
   service { "spark-master":
     ensure => running,
     start => "$spark_home/sbin/start-master.sh",

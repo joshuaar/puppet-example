@@ -4,37 +4,45 @@ class{'spark':
   master_hostname => $master_hostname,
 }
 
-node /^.*sparkmaster.*$/ {
-  include spark::master
-}
+node /^.*[A-Za-z].*$/ {
 
-node /^.*sparkworker.*$/ {
-  include spark::worker
-}
-
-node /^.*elasticsearch.*$/ {
-
-  #TODO put wget and java in separate modules
-
-  package { 'wget':
-    ensure => present,
+  notify {
+    "This node's role is $::role":
   }
 
-  #may not need for depoys on orion boxes
-  package {'java-1.7.0-openjdk':
-    ensure => present
-  }
+  case $::role {
+    "sparkmaster" : {
+      include spark::master
+    }
+    "sparkworker" : {
+      include spark::worker
+    }
+    "sparkclient" : {
+      include spark::client
+    }
+    "elasticsearch" : {
 
-  class { 'elasticsearch':
-    package_url => 'https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.7.2.noarch.rpm',
-  }
+      package { 'wget':
+        ensure => present,
+      }
 
-  elasticsearch::instance{
-    'oha-1':
-  }
+      #may not need for depoys on orion boxes
+      package {'java-1.7.0-openjdk':
+        ensure => present
+      }
 
-  elasticsearch::plugin{
-    'elasticsearch/marvel/latest':
-       instances => 'oha-1'
+      class { 'elasticsearch':
+        package_url => 'https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.7.2.noarch.rpm',
+      }
+
+      elasticsearch::instance{
+        'oha-1':
+      }
+
+      elasticsearch::plugin{
+        'elasticsearch/marvel/latest':
+           instances => 'oha-1'
+      }
+    }
   }
 }
