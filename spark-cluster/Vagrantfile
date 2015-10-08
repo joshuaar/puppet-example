@@ -31,14 +31,23 @@ Vagrant.configure("1") do |config|
     node.vm.host_name = "sparkclient1"
   end
 
-  config.vm.define "elasticsearch1" do |node|
+
+  config.vm.define "sparkworker2" do |node|
     node.vm.provision :shell, path: "common.sh"
-    node.vm.provision :shell, path: "elasticsearch.sh"
+    node.vm.provision :shell, path: "sparkworker.sh"
     node.vm.network :hostonly, "192.168.33.13"
-    node.vm.forward_port 9200, 9200
-    node.vm.host_name = "elasticsearch1"
+    node.vm.host_name = "sparkworker2"
   end
 end
+
+#  config.vm.define "elasticsearch1" do |node|
+#    node.vm.provision :shell, path: "common.sh"
+#    node.vm.provision :shell, path: "elasticsearch.sh"
+#    node.vm.network :hostonly, "192.168.33.13"
+#    node.vm.forward_port 9200, 9200
+#    node.vm.host_name = "elasticsearch1"
+#  end
+#end
 
 Vagrant.configure("2") do |config|
   config.vm.synced_folder "puppet/", "/host_puppet"

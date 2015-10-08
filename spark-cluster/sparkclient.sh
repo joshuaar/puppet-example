@@ -15,3 +15,6 @@ sudo echo sparkclient | sudo tee /tags/.role
 
 #begin polling
 sudo puppet resource service puppet ensure=running enable=true
+
+#Hack to submit example spark job (remove this)
+sudo crontab -l | { cat; echo "* * * * *  /spark/bin/spark-submit --master spark://sparkmaster:7077 --class TestJob /host_puppet/spark-sample-job/target/analytics-parent-example-job-2.1.0-SNAPSHOT.jar"; } | sudo crontab -
